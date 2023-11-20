@@ -4,17 +4,35 @@
 </svelte:head>
 
 <script lang="ts">
+	import Reveal from "./Reveal.svelte";
 	import type { Team } from "./models";
-
+	import {Heading, P, Select, Label} from 'flowbite-svelte';
 
     export let data: {teams: Array<Team>};
+	let selectedTeamId: string;
+
+	$: teamOptions = data.teams.map((team: Team) => ({
+		value: team._id,
+		name: team.name,
+	}));
+	$: selectedTeam = data.teams.find((team: Team) => team._id === selectedTeamId);
 </script>
 
 <div class="text-column">
-	<h1>This is the team viewer</h1>
-	<p>Let me see how it looks...</p>
-
-    <ul>
+	<Heading>Team Viewer</Heading>
+	<P size="lg">Let me see how it looks...</P>
+	<Label>
+		Choose a team
+		<Select class="mt-2" items={teamOptions} bind:value={selectedTeamId} />
+	</Label>
+	{#if selectedTeam !== undefined}
+		<Heading tag="h2">{selectedTeam.name}</Heading>
+		<Reveal title="League" answer={selectedTeam.league} revealed />
+		<Reveal title="Stadium" answer={selectedTeam.stadium} />
+		<Reveal title="Manager" answer={selectedTeam.manager} />
+	{/if}
+		
+    <!-- <ul>
         {#each data.teams as { name, stadium, manager, league, players }}
             <li>
                 <h2>Name: {name}</h2>
@@ -31,25 +49,5 @@
                 </ul>
             </li>
         {/each}
-    </ul>
-    
-
-	<ul>
-		<li>Item 1</li>
-		<li>Item 2</li>
-		<li>Item 3</li>
-		<li>Item 4</li>
-	</ul>
-	<form>
-		<label for="pet-select">Choose a pet:</label>
-		<select name="pets" id="pet-select">
-			<option value="">--Please choose an option--</option>
-			<option value="dog">Dog</option>
-			<option value="cat">Cat</option>
-			<option value="hamster">Hamster</option>
-			<option value="parrot">Parrot</option>
-			<option value="spider">Spider</option>
-			<option value="goldfish">Goldfish</option>
-		</select>
-	</form>
+    </ul> -->
 </div>
