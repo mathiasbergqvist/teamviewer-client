@@ -11,7 +11,9 @@
 </script>
 
 <div class="text-column">
-	<h1>This is the team viewer</h1>
+	<h1 class="text-3xl font-bold underline">
+		This is the team viewer
+	</h1>
 	<p>Let me see how it looks...</p>
 
     <ul>
@@ -42,7 +44,7 @@
 	</ul>
 	<form>
 		<label for="pet-select">Choose a pet:</label>
-		<select name="pets" id="pet-select">
+		<select name="pets" id="pet-select form-select block w-full mt-1">
 			<option value="">--Please choose an option--</option>
 			<option value="dog">Dog</option>
 			<option value="cat">Cat</option>
