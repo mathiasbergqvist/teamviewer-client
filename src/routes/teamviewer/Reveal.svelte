@@ -1,6 +1,6 @@
 <script lang="ts">
-    import {Button, P} from 'flowbite-svelte';
-
+    import {Button, Span} from 'flowbite-svelte';
+    import {QuestionCircleSolid} from 'flowbite-svelte-icons';
     export let answer: string;
     export let title: string;
     export let revealed: boolean = false;
@@ -11,18 +11,26 @@
 </script>
 
 <div>
-    <P size="lg">
+    <Span>
         {title}:
-        {#if revealed}
+    </Span>
+    {#if revealed}
+        <Span size="lg">
             {answer}
-        {:else}
-            <Button on:click={handleReveal}>???</Button>
-        {/if}
-    </P>
+        </Span>
+    {:else}
+        <Button on:click={handleReveal} size="lg">
+            <QuestionCircleSolid class="w-4 h-4 mr-2"/> Reveal
+        </Button>
+    {/if}
 </div>
 
 <style>
     div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         margin: 15px 0;
+        min-height: 50px;
     }
 </style>

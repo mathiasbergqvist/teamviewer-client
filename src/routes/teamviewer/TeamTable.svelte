@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Player } from "./models";
-    import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Checkbox, TableSearch, Button } from 'flowbite-svelte';
+    import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Button } from 'flowbite-svelte';
+    import {QuestionCircleSolid} from 'flowbite-svelte-icons';
 
     export let players: Array<Player>;
 
@@ -22,16 +23,16 @@
     </TableHead>
     <TableBody>
         {#each players as { number, countryUnicode, position, name, _id }}
-            <TableBodyRow>
+            <TableBodyRow class="!h-12">
                 <TableBodyCell>{number}</TableBodyCell>
                 <TableBodyCell>&#{countryUnicode};</TableBodyCell>
                 <TableBodyCell>{position}</TableBodyCell>
                 <TableBodyCell>
                     {#if isRevealed(_id)}
-                        {name}
+                        <p class="name">{name}</p>
                     {:else}
                         <Button on:click={() => handleReveal(_id)}>
-                            ???
+                            <QuestionCircleSolid class="w-4 h-4 mr-2"/> Reveal
                         </Button>
                     {/if}
                 </TableBodyCell>
@@ -39,3 +40,10 @@
         {/each}
     </TableBody>
 </Table>
+
+<style>
+    .name {
+        font-weight: bold;
+        line-height: 40px;
+    }
+</style>
