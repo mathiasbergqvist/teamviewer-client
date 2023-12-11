@@ -24,9 +24,44 @@ export const getTeams = async (): Promise<Array<Team> | ApiError> => {
 	}
 };
 
+export const postTeams = async (team: Team): Promise<Team | ApiError> => {
+	const jsonTeam = {
+		name: team.name,
+		stadium: team.stadium,
+		manager: team.manager,
+		league: team.league,
+		playerIds: team.playerIds.map((player) => player._id)
+	};
+	const body = JSON.stringify(jsonTeam);
+	try {
+		const response = await fetch(`${API_URL}/teams`, {
+			method: 'POST',
+			headers: getHeaders(),
+			body
+		});
+		return (await response.json()) as Team;
+	} catch (error) {
+		return {
+			error
+		};
+	}
+};
+
+export const getPlayers = async (): Promise<Array<Player> | ApiError> => {
+	try {
+		const response = await fetch(`${API_URL}/players`, {
+			headers: getHeaders()
+		});
+		return (await response.json()) as Array<Player>;
+	} catch (error) {
+		return {
+			error
+		};
+	}
+};
+
 export const postPlayers = async (player: Player): Promise<Player | ApiError> => {
 	const jsonPlayer = JSON.stringify(player);
-	console.log(jsonPlayer);
 	try {
 		const response = await fetch(`${API_URL}/players`, {
 			method: 'POST',
