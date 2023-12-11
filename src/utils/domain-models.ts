@@ -8,7 +8,9 @@ export enum Position {
 
 export enum League {
 	PremierLeague = 'Premier League',
-	SerieA = 'Serie A'
+	SerieA = 'Serie A',
+	LaLiga = 'La Liga',
+	NFL = 'NFL'
 }
 
 export type Player = {
@@ -26,7 +28,7 @@ export type Team = {
 	stadium: string;
 	manager: string;
 	league: string;
-	players: Array<Player>;
+	playerIds: Array<Player>;
 };
 
 export type ApiError = {
