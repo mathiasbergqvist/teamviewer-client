@@ -25,6 +25,9 @@
 			<li aria-current={$page.url.pathname.startsWith('/add-player') ? 'page' : undefined}>
 				<a href="/add-player">Add Player</a>
 			</li>
+			<li aria-current={$page.url.pathname.startsWith('/add-team') ? 'page' : undefined}>
+				<a href="/add-team">Add Team</a>
+			</li>
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
