@@ -75,15 +75,15 @@
 	<Heading>Add Player</Heading>
 	<form on:submit={handleSubmit}>
 		<div>
-			<Label for="name" class="mb-2">Name</Label>
+			<Label for="name" class="mb-2" style="align-self: flex-start">Name</Label>
 			<Input type="text" id="name" bind:value={name} required />
 		</div>
 		<div>
-			<Label for="number" class="mb-2">Number</Label>
+			<Label for="number" class="mb-2" style="align-self: flex-start">Number</Label>
 			<NumberInput type="text" id="number" bind:value={number} required />
 		</div>
 		<div>
-			<Label for="position" class="mb-2">Position</Label>
+			<Label for="position" class="mb-2" style="align-self: flex-start">Position</Label>
 			<Select
 				id="position"
 				class="select"
@@ -94,7 +94,7 @@
 			/>
 		</div>
 		<div>
-			<Label for="league" class="mb-2">League</Label>
+			<Label for="league" class="mb-2" style="align-self: flex-start">League</Label>
 			<Select
 				id="league"
 				class="select"
@@ -105,7 +105,7 @@
 			/>
 		</div>
 		<div>
-			<Label for="country" class="mb-2">Country</Label>
+			<Label for="country" class="mb-2" style="align-self: flex-start">Country</Label>
 			<Select
 				id="country"
 				class="select"
@@ -135,13 +135,18 @@
 <style>
 	div {
 		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 
 	form {
-		max-width: 500px;
+		width: 500px;
 		display: flex;
 		flex-direction: column;
 		gap: 25px;
+		margin-top: 50px;
+		text-align: left;
 	}
 
 	.alert {

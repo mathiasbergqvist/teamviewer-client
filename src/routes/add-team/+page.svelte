@@ -71,19 +71,19 @@
 
 	<form on:submit={handleSubmit}>
 		<div>
-			<Label for="name" class="mb-2">Name</Label>
+			<Label for="name" class="mb-2" style="align-self: flex-start">Name</Label>
 			<Input type="text" id="name" bind:value={name} required />
 		</div>
 		<div>
-			<Label for="stadium" class="mb-2">Stadium</Label>
+			<Label for="stadium" class="mb-2" style="align-self: flex-start">Stadium</Label>
 			<Input type="text" id="stadium" bind:value={stadium} required />
 		</div>
 		<div>
-			<Label for="manager" class="mb-2">Manager</Label>
+			<Label for="manager" class="mb-2" style="align-self: flex-start">Manager</Label>
 			<Input type="text" id="manager" bind:value={manager} required />
 		</div>
 		<div>
-			<Label for="position" class="mb-2">League</Label>
+			<Label for="position" class="mb-2" style="align-self: flex-start">League</Label>
 			<Select
 				id="position"
 				class="select"
@@ -93,11 +93,10 @@
 				style="maxWidth: 350px"
 			/>
 		</div>
-		<Button on:click={() => (modalOpen = true)} style="margin: 15px 0">Add player</Button>
 		<PlayerTable players={selectedPlayers} {handleRemovePlayer} />
 		<Button type="submit" style="margin: 15px 0">Save Team</Button>
 	</form>
-	<PlayerModal {handleSelectedPlayer} {modalOpen} players={data.players} />
+	<PlayerModal {handleSelectedPlayer} players={data.players} />
 	<div class="alert">
 		{#if statusMessage === 'error'}
 			<Alert>
@@ -116,10 +115,13 @@
 <style>
 	div {
 		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 
 	form {
-		max-width: 500px;
+		width: 500px;
 		display: flex;
 		flex-direction: column;
 		gap: 25px;

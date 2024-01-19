@@ -54,11 +54,9 @@
 </div>
 
 <style>
-	div {
-		margin-top: 50px;
-	}
 	.select-container {
 		display: flex;
 		justify-content: center;
+		margin: 25px;
 	}
 </style>

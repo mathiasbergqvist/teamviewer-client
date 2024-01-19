@@ -10,6 +10,7 @@
 		Button
 	} from 'flowbite-svelte';
 	import { QuestionCircleSolid } from 'flowbite-svelte-icons';
+	import countryFlagEmoji from 'country-flag-emoji';
 
 	export let players: Array<Player>;
 
@@ -30,10 +31,12 @@
 		<TableHeadCell>Name</TableHeadCell>
 	</TableHead>
 	<TableBody>
-		{#each players as { number, countryUnitcode, position, name, _id }}
+		{#each players as { number, countryUnicode, position, name, _id }}
 			<TableBodyRow class="!h-12">
 				<TableBodyCell>{number}</TableBodyCell>
-				<TableBodyCell>&#{countryUnitcode};</TableBodyCell>
+				{#if countryUnicode !== undefined}
+					<TableBodyCell>{countryFlagEmoji.get(countryUnicode)?.emoji}</TableBodyCell>
+				{/if}
 				<TableBodyCell>{position}</TableBodyCell>
 				<TableBodyCell>
 					{#if isRevealed(_id)}
