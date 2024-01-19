@@ -1,7 +1,5 @@
 <script>
 	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
-	import github from '$lib/images/github.svg';
 </script>
 
 <header>
@@ -13,10 +11,7 @@
 		</svg>
 		<ul>
 			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Home</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/teamviewer' ? 'page' : undefined}>
-				<a href="/teamviewer">Team viewer</a>
+				<a href="/">Team viewer</a>
 			</li>
 			<li aria-current={$page.url.pathname.startsWith('/add-player') ? 'page' : undefined}>
 				<a href="/add-player">Add Player</a>
@@ -42,20 +37,6 @@
 	.corner {
 		width: 3em;
 		height: 3em;
-	}
-
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
-
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
 	}
 
 	nav {

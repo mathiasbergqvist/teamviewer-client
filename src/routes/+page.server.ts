@@ -1,4 +1,4 @@
-import { getTeams } from '../../utils/api.js';
+import { getTeams } from '../utils/api.js';
 import { error } from '@sveltejs/kit';
 
 export const load = async ({ params }) => {

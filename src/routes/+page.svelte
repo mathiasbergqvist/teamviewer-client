@@ -1,59 +1,62 @@
-<script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+<script lang="ts">
+	import Reveal from './Reveal.svelte';
+	import TeamTable from './TeamTable.svelte';
+	import type { Team } from '../utils/domain-models';
+	import { Heading, Select, Label, Spinner, Alert } from 'flowbite-svelte';
+
+	export let data: { teams: Array<Team> };
+	let selectedTeamId: string;
+
+	$: teamOptions = data.teams.map((team: Team) => ({
+		value: team._id,
+		name: team.name
+	}));
+	$: selectedTeam = data.teams.find((team: Team) => team._id === selectedTeamId);
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>Team viewer</title>
+	<meta name="description" content="Team viewer" />
 </svelte:head>
 
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
+<div>
+	{#await data}
+		<Spinner />
+	{:then}
+		<Heading>Team Viewer</Heading>
+		<div class="select-container">
+			<Label>
+				Choose a team
+				<Select
+					class="select"
+					items={teamOptions}
+					bind:value={selectedTeamId}
+					size="lg"
+					style="width: 350px"
+				/>
+			</Label>
+		</div>
+		{#if selectedTeam !== undefined}
+			<div>
+				<Heading tag="h2" align="center">{selectedTeam.name}</Heading>
+				<Reveal title="League" answer={selectedTeam.league} revealed />
+				<Reveal title="Stadium" answer={selectedTeam.stadium} />
+				<Reveal title="Manager" answer={selectedTeam.manager} />
+				<TeamTable players={selectedTeam.players} />
+			</div>
+		{/if}
+	{:catch}
+		<Alert>
+			<span class="font-medium">Default alert!</span>
+			Change a few things up and try submitting again.
+		</Alert>
+	{/await}
+</div>
 
 <style>
-	section {
+	.select-container {
 		display: flex;
-		flex-direction: column;
 		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
+		margin: 25px;
 	}
 </style>
