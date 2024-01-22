@@ -9,7 +9,7 @@
 		Modal,
 		Button
 	} from 'flowbite-svelte';
-	import type { Player } from '../../utils/domain-models';
+	import type { Player } from '../utils/domain-models';
 	export let handleSelectedPlayer: (player: Player) => void;
 	export let players: Array<Player> = [];
 	let modalOpen: boolean;

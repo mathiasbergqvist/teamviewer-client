@@ -1,5 +1,5 @@
-import { getTeams } from '../utils/api.js';
 import { error } from '@sveltejs/kit';
+import { getTeams } from '../../utils/api.js';
 
 export const load = async ({ _ }) => {
 	const response = await getTeams();

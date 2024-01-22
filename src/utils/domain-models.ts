@@ -28,7 +28,7 @@ export type Team = {
 	stadium: string;
 	manager: string;
 	league: string;
-	playerIds: Array<Player>;
+	players: Array<Player>;
 };
 
 export type ApiError = {

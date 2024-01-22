@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Heading, Input, Label, Button, Select, Alert } from 'flowbite-svelte';
 	import { League, type Player, type Team } from '../../utils/domain-models';
-	import PlayerModal from './PlayerModal.svelte';
-	import PlayerTable from './PlayerTable.svelte';
+	import PlayerModal from '../../components/PlayerModal.svelte';
+	import PlayerTable from '../../components/PlayerTable.svelte';
 	import { postTeams } from '../../utils/api';
 
 	export let data: { players: Array<Player> };
@@ -40,7 +40,7 @@
 			stadium,
 			manager,
 			league,
-			playerIds: selectedPlayers
+			players: selectedPlayers
 		};
 
 		const response = await postTeams(newTeam);

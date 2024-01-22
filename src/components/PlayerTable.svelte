@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Player } from '../../utils/domain-models';
+	import type { Player } from '../utils/domain-models';
 	import {
 		TableBody,
 		TableBodyCell,
@@ -8,12 +8,18 @@
 		TableHeadCell,
 		Table
 	} from 'flowbite-svelte';
+	import { removePlayersFromArray, sortPlayers } from '../utils/sorting';
 
 	export let players: Array<Player>;
+	export let removedPlayerIds: Array<string> = [];
+
+	$: sortedPlayers = sortPlayers(players);
+	$: filteredPlayers =
+		removedPlayerIds.length > 0 ? removePlayersFromArray(removedPlayerIds, players) : sortedPlayers;
 	export let handleRemovePlayer: (player: Player) => void;
 </script>
 
-{#if players.length > 0}
+{#if filteredPlayers.length > 0}
 	<caption
 		class="p-5 text-lg font-semibold text-left text-gray-900 dark:text-white dark:bg-gray-800"
 		>Players</caption
@@ -28,7 +34,7 @@
 			</TableHeadCell>
 		</TableHead>
 		<TableBody class="divide-y">
-			{#each players as player}
+			{#each filteredPlayers as player}
 				<TableBodyRow>
 					<TableBodyCell>{player.name}</TableBodyCell>
 					<TableBodyCell>{player.number}</TableBodyCell>
