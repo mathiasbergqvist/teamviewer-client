@@ -2,6 +2,7 @@
 	import PlayerTable from '../../components/PlayerTable.svelte';
 	import type { Player, Team } from '../../utils/domain-models';
 	import { Heading, Select, Label, Spinner, Alert, Input, Button } from 'flowbite-svelte';
+	import { removePlayersFromArray } from '../../utils/sorting';
 
 	export let data: { teams: Array<Team> };
 	let selectedTeamId: string = '';
@@ -13,8 +14,9 @@
 	$: selectedTeam = data.teams.find((team: Team) => team._id === selectedTeamId);
 
 	let removedPlayerIds: Array<string> = [];
-	let stadium: string = '';
-	let manager: string = '';
+	let editedStadium: string = '';
+	let editedManager: string = '';
+
 
 	const handleRemovePlayer = (player: Player) => {
 		if (player._id) {
@@ -22,9 +24,27 @@
 		}
 	};
 
+	const handleOnStadiumChange = (e) => {
+		editedStadium = e.target.value;
+	};
+
+	const handleOnManagerChange = (e) => {
+		editedManager = e.target.value;
+	};
+
 	const handleSubmit = () => {
-		console.log('selectedTeam', selectedTeam);
-		console.log('name', name);
+		if (selectedTeam) {
+			const editedPlayers = removePlayersFromArray(removedPlayerIds, selectedTeam?.players);
+
+			const editedTeam: Team = {
+				_id: selectedTeam?._id,
+				name: selectedTeam?.name,
+				stadium: editedStadium !== '' ? editedStadium : selectedTeam?.stadium,
+				manager: editedManager !== '' ? editedManager : selectedTeam?.manager,
+				players: editedPlayers,
+			};
+			console.log('editedTeam', editedTeam);
+		}
 	};
 </script>
 
@@ -59,7 +79,8 @@
 						<Input
 							type="text"
 							id="stadium"
-							bind:value={stadium}
+							on:change={handleOnStadiumChange}
+							value={selectedTeam.stadium}
 							required
 							placeholder={selectedTeam.stadium}
 						/>
@@ -69,7 +90,7 @@
 						<Input
 							type="text"
 							id="stadium"
-							bind:value={manager}
+							bind:value={editedManager}
 							required
 							placeholder={selectedTeam.manager}
 						/>
