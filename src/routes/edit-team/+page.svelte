@@ -3,8 +3,9 @@
 	import type { Player, Team } from '../../utils/domain-models';
 	import { Heading, Select, Label, Spinner, Alert, Input, Button } from 'flowbite-svelte';
 	import { removePlayersFromArray } from '../../utils/sorting';
+	import PlayerModal from '../../components/PlayerModal.svelte';
 
-	export let data: { teams: Array<Team> };
+	export let data: { teams: Array<Team>, players: Array<Player> };
 	let selectedTeamId: string = '';
 
 	$: teamOptions = data.teams.map((team: Team) => ({
@@ -16,6 +17,7 @@
 	let removedPlayerIds: Array<string> = [];
 	let editedStadium: string = '';
 	let editedManager: string = '';
+	let addedPlayers: Array<Player> = [];
 
 
 	const handleRemovePlayer = (player: Player) => {
@@ -32,10 +34,14 @@
 		editedManager = e.target.value;
 	};
 
+	const handleSelectedPlayer = (player: Player) => {
+		addedPlayers = [...addedPlayers, player];
+	};
+
 	const handleSubmit = () => {
 		if (selectedTeam) {
-			const editedPlayers = removePlayersFromArray(removedPlayerIds, selectedTeam?.players);
-
+			const filteredPlayers = removePlayersFromArray(removedPlayerIds, selectedTeam?.players);
+			const editedPlayers = [...filteredPlayers, ...addedPlayers];
 			const editedTeam: Team = {
 				_id: selectedTeam?._id,
 				name: selectedTeam?.name,
@@ -90,13 +96,15 @@
 						<Input
 							type="text"
 							id="stadium"
-							bind:value={editedManager}
+							on:change={handleOnManagerChange}
+							value={selectedTeam.manager}
 							required
 							placeholder={selectedTeam.manager}
 						/>
 					</div>
 				</div>
 				<PlayerTable players={selectedTeam.players} {handleRemovePlayer} {removedPlayerIds} />
+				<PlayerModal {handleSelectedPlayer} players={data.players} />
 				<Button type="submit" style="margin: 15px 0">Save Team</Button>
 			</form>
 		{/if}
