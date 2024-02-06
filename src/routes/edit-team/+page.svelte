@@ -4,8 +4,10 @@
 	import { Heading, Select, Label, Spinner, Alert, Input, Button } from 'flowbite-svelte';
 	import { getFilteredPlayers } from '../../utils/sorting';
 	import PlayerModal from '../../components/PlayerModal.svelte';
+	import { updateTeam } from '../../utils/api';
+	import StatusMessage from '../../components/StatusMessage.svelte';
 
-	export let data: { teams: Array<Team>, players: Array<Player> };
+	export let data: { teams: Array<Team>; players: Array<Player> };
 	let selectedTeamId: string = '';
 
 	$: teamOptions = data.teams.map((team: Team) => ({
@@ -18,7 +20,7 @@
 	let editedStadium: string = '';
 	let editedManager: string = '';
 	let addedPlayers: Array<Player> = [];
-
+	let statusMessage: 'success' | 'error' | 'hide' = 'hide';
 
 	const handleRemovePlayer = (player: Player) => {
 		if (player._id) {
@@ -36,20 +38,31 @@
 
 	const handleSelectedPlayer = (player: Player) => {
 		addedPlayers = [...addedPlayers, player];
-		console.log("addedPlayers", addedPlayers);
+		console.log('addedPlayers', addedPlayers);
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		if (selectedTeam) {
-			const editedPlayers = getFilteredPlayers(removedPlayerIds, addedPlayers, selectedTeam?.players);
+			const editedPlayers = getFilteredPlayers(
+				removedPlayerIds,
+				addedPlayers,
+				selectedTeam?.players
+			);
 			const editedTeam: Team = {
 				_id: selectedTeam?._id,
 				name: selectedTeam?.name,
+				league: selectedTeam.league,
 				stadium: editedStadium !== '' ? editedStadium : selectedTeam?.stadium,
 				manager: editedManager !== '' ? editedManager : selectedTeam?.manager,
-				players: editedPlayers,
+				players: editedPlayers
 			};
-			console.log('editedTeam', editedTeam);
+			const response = await updateTeam(editedTeam);
+
+			if ('error' in response) {
+				statusMessage = 'error';
+			} else {
+				statusMessage = 'success';
+			}
 		}
 	};
 </script>
@@ -103,11 +116,17 @@
 						/>
 					</div>
 				</div>
-				<PlayerTable players={selectedTeam.players} {handleRemovePlayer} {removedPlayerIds} {addedPlayers} />
+				<PlayerTable
+					players={selectedTeam.players}
+					{handleRemovePlayer}
+					{removedPlayerIds}
+					{addedPlayers}
+				/>
 				<PlayerModal {handleSelectedPlayer} players={data.players} />
 				<Button type="submit" style="margin: 15px 0">Save Team</Button>
 			</form>
 		{/if}
+		<StatusMessage {statusMessage} successMessage="Successfully updated team." />
 	{:catch}
 		<Alert>
 			<span class="font-medium">Error</span>

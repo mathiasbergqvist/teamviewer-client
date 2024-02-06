@@ -16,7 +16,9 @@
 
 	$: sortedPlayers = sortPlayers(players);
 	$: filteredPlayers =
-		removedPlayerIds.length > 0 ? getFilteredPlayers(removedPlayerIds, addedPlayers, players) : sortedPlayers;
+		removedPlayerIds.length > 0 || addedPlayers.length > 0
+			? getFilteredPlayers(removedPlayerIds, addedPlayers, players)
+			: sortedPlayers;
 	export let handleRemovePlayer: (player: Player) => void;
 </script>
 
