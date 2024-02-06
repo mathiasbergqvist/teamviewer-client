@@ -8,14 +8,15 @@
 		TableHeadCell,
 		Table
 	} from 'flowbite-svelte';
-	import { removePlayersFromArray, sortPlayers } from '../utils/sorting';
+	import { getFilteredPlayers, sortPlayers } from '../utils/sorting';
 
 	export let players: Array<Player>;
 	export let removedPlayerIds: Array<string> = [];
+	export let addedPlayers: Array<Player> = [];
 
 	$: sortedPlayers = sortPlayers(players);
 	$: filteredPlayers =
-		removedPlayerIds.length > 0 ? removePlayersFromArray(removedPlayerIds, players) : sortedPlayers;
+		removedPlayerIds.length > 0 ? getFilteredPlayers(removedPlayerIds, addedPlayers, players) : sortedPlayers;
 	export let handleRemovePlayer: (player: Player) => void;
 </script>
 

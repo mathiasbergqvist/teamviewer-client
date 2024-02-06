@@ -5,13 +5,15 @@ export const sortPlayers = (players: Array<Player>): Array<Player> => {
 	return players.sort((a, b) => positionOrder[a.position] - positionOrder[b.position]);
 };
 
-export const removePlayersFromArray = (
-	ids: Array<string>,
+export const getFilteredPlayers = (
+	removedIds: Array<string>,
+	addedPlayers: Array<Player>,
 	players: Array<Player>
 ): Array<Player> => {
-	return players.filter((player) => {
+	const allPlayers = [...players, ...addedPlayers];
+	return allPlayers.filter((player) => {
 		if (player._id) {
-			return !ids.includes(player._id);
+			return !removedIds.includes(player._id);
 		}
 		return false;
 	});

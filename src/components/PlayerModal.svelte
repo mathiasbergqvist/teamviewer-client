@@ -39,13 +39,23 @@
 				<TableHeadCell>Name</TableHeadCell>
 				<TableHeadCell>Number</TableHeadCell>
 				<TableHeadCell>Position</TableHeadCell>
+				<TableHeadCell>
+					<span class="sr-only">Add</span>
+				</TableHeadCell>
 			</TableHead>
 			<TableBody class="divide-y">
 				{#each filteredItems as player}
-					<TableBodyRow on:click={() => handleSelectedPlayer(player)}>
+					<TableBodyRow>
 						<TableBodyCell>{player.name}</TableBodyCell>
 						<TableBodyCell>{player.number}</TableBodyCell>
 						<TableBodyCell>{player.position}</TableBodyCell>
+						<TableBodyCell>
+							<a
+								class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+								on:click={() => handleSelectedPlayer(player)}>
+								Add
+							</a>
+						</TableBodyCell>
 					</TableBodyRow>
 				{/each}
 			</TableBody>
