@@ -4,6 +4,7 @@
 	import PlayerModal from '../../components/PlayerModal.svelte';
 	import PlayerTable from '../../components/PlayerTable.svelte';
 	import { postTeams } from '../../utils/api';
+	import StatusMessage from '../../components/StatusMessage.svelte';
 
 	export let data: { players: Array<Player> };
 
@@ -12,8 +13,7 @@
 	let manager: string;
 	let league: League;
 	let selectedPlayers: Array<Player> = [];
-	let modalOpen: boolean = false;
-	let statusMessage: 'success' | 'error' | 'hide' = 'hide';
+	let statusMessage: 'success' | 'error' | 'hide';
 
 	const leagueItems = [
 		{
@@ -97,19 +97,7 @@
 		<Button type="submit" style="margin: 15px 0">Save Team</Button>
 	</form>
 	<PlayerModal {handleSelectedPlayer} players={data.players} />
-	<div class="alert">
-		{#if statusMessage === 'error'}
-			<Alert>
-				<span class="font-medium">Error</span>
-				Something went wrong when adding the team to database
-			</Alert>
-		{:else if statusMessage === 'success'}
-			<Alert color="green">
-				<span class="font-medium">Success</span>
-				Team added to the database
-			</Alert>
-		{/if}
-	</div>
+	<StatusMessage {statusMessage} successMessage="Team added to the database" />
 </div>
 
 <style>
@@ -125,10 +113,5 @@
 		display: flex;
 		flex-direction: column;
 		gap: 25px;
-	}
-
-	.alert {
-		margin: 20px;
-		max-width: 500px;
 	}
 </style>
