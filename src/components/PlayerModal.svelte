@@ -20,10 +20,7 @@
 </script>
 
 {#if players.length > 0}
-	<Button 
-		on:click={() => (modalOpen = true)} 
-		color="yellow"
-		style="margin: 15px 0; width: 500px;"
+	<Button on:click={() => (modalOpen = true)} color="yellow" style="margin: 15px 0; width: 500px;"
 		>Add player</Button
 	>
 	<Modal
@@ -52,7 +49,8 @@
 						<TableBodyCell>
 							<a
 								class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-								on:click={() => handleSelectedPlayer(player)}>
+								on:click={() => handleSelectedPlayer(player)}
+							>
 								Add
 							</a>
 						</TableBodyCell>
@@ -62,3 +60,11 @@
 		</TableSearch>
 	</Modal>
 {/if}
+
+<style>
+	a {
+		&:hover {
+			cursor: pointer;
+		}
+	}
+</style>
