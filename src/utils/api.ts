@@ -24,13 +24,36 @@ export const getTeams = async (): Promise<Array<Team> | ApiError> => {
 	}
 };
 
+export const updateTeam = async (team: Team): Promise<Team | ApiError> => {
+	const jsonTeam = {
+		name: team.name,
+		stadium: team.stadium,
+		manager: team.manager,
+		league: team.league,
+		playerIds: team.players.map((player) => player._id)
+	};
+	const body = JSON.stringify(jsonTeam);
+	try {
+		const response = await fetch(`${API_URL}/teams/${team._id}`, {
+			method: 'PUT',
+			headers: getHeaders(),
+			body
+		});
+		return (await response.json()) as Team;
+	} catch (error) {
+		return {
+			error
+		};
+	}
+};
+
 export const postTeams = async (team: Team): Promise<Team | ApiError> => {
 	const jsonTeam = {
 		name: team.name,
 		stadium: team.stadium,
 		manager: team.manager,
 		league: team.league,
-		playerIds: team.playerIds.map((player) => player._id)
+		playerIds: team.players.map((player) => player._id)
 	};
 	const body = JSON.stringify(jsonTeam);
 	try {
