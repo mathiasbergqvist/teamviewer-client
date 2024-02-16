@@ -38,7 +38,6 @@
 
 	const handleSelectedPlayer = (player: Player) => {
 		addedPlayers = [...addedPlayers, player];
-		console.log('addedPlayers', addedPlayers);
 	};
 
 	const handleSubmit = async () => {
