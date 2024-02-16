@@ -1,16 +1,17 @@
-// import type { Handle } from '@sveltejs/kit';
-// import { ADMIN_LOGIN } from '$env/static/private';
-// export const handle: Handle = async ({ event, resolve }) => {
-// 	const auth = event.request.headers.get('Authorization');
+import type { Handle } from '@sveltejs/kit';
+const VITE_ADMIN_LOGIN = import.meta.env.VITE_ADMIN_LOGIN;
 
-// 	if (auth !== `Basic ${btoa(ADMIN_LOGIN)}`) {
-// 		return new Response('Not authorized', {
-// 			status: 401,
-// 			headers: {
-// 				'WWW-Authenticate': 'Basic realm="User Visible Realm", charset="UTF-8"'
-// 			}
-// 		});
-// 	}
+export const handle: Handle = async ({ event, resolve }) => {
+	const auth = event.request.headers.get('Authorization');
 
-// 	return resolve(event);
-// };
+	if (auth !== `Basic ${btoa(VITE_ADMIN_LOGIN)}`) {
+		return new Response('Not authorized', {
+			status: 401,
+			headers: {
+				'WWW-Authenticate': 'Basic realm="User Visible Realm", charset="UTF-8"'
+			}
+		});
+	}
+
+	return resolve(event);
+};
