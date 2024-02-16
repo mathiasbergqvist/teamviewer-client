@@ -55,9 +55,7 @@
 {/if}
 
 <style>
-	a {
-		&:hover {
-			cursor: pointer;
-		}
+	a:hover {
+		cursor: pointer;
 	}
 </style>
