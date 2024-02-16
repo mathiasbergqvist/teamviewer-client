@@ -1,6 +1,5 @@
 import type { Handle } from '@sveltejs/kit';
 import { ADMIN_LOGIN } from '$env/static/private';
-
 export const handle: Handle = async ({ event, resolve }) => {
 	const auth = event.request.headers.get('Authorization');
 
