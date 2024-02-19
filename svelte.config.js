@@ -5,7 +5,7 @@ const API_URL = process.env.VITE_API_DOMAIN;
 const cspDirectives = {
 	'base-uri': ["'self'"],
 	'child-src': ["'self'"],
-	'connect-src': ["'self'", `${API_URL}`, 'ws://localhost:*'],
+	'connect-src': ["'self'", `${API_URL}`, 'ws://localhost:*', 'https://r.logr-ingest.com'],
 	'img-src': ["'self'", 'data:'],
 	'font-src': ["'self'", 'data:'],
 	'form-action': ["'self'"],
@@ -16,8 +16,8 @@ const cspDirectives = {
 	'object-src': ["'none'"],
 	'style-src': ["'self'", "'unsafe-inline'"],
 	'default-src': ['self', `${API_URL}`],
-	'script-src': ['self'],
-	'worker-src': ["'self'"]
+	'script-src': ['self', 'https://cdn.logr-ingest.com/logger-1.min.js'],
+	'worker-src': ["'self'", 'blob:']
 };
 
 /** @type {import('@sveltejs/kit').Config} */
