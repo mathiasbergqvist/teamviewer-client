@@ -2,6 +2,7 @@
 	import '../app.pcss';
 	import Header from './Header.svelte';
 	import './styles.css';
+	import '../utils/logrocket';
 </script>
 
 <div class="app">
