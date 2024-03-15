@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Heading, Input, Label, Button, Select, Alert } from 'flowbite-svelte';
+	import { Heading, Input, Label, Button, Select, Toast } from 'flowbite-svelte';
 	import { League, type Player, type Team } from '../../utils/domain-models';
 	import PlayerModal from '../../components/PlayerModal.svelte';
 	import PlayerTable from '../../components/PlayerTable.svelte';
 	import { postTeams } from '../../utils/api';
 	import StatusMessage from '../../components/StatusMessage.svelte';
+	import { CheckCircleSolid } from 'flowbite-svelte-icons';
 
 	export let data: { players: Array<Player> };
 
@@ -14,6 +15,7 @@
 	let league: League | undefined;
 	let selectedPlayers: Array<Player> = [];
 	let statusMessage: 'success' | 'error' | 'hide' | 'incomplete';
+	let displayToaster: boolean = false;
 
 	const clearForm = () => {
 		name = '';
@@ -24,6 +26,13 @@
 
 		setTimeout(() => {
 			statusMessage = 'hide';
+		}, 2000);
+	};
+
+	const toggleToaster = () => {
+		displayToaster = true;
+		setTimeout(() => {
+			displayToaster = false;
 		}, 2000);
 	};
 
@@ -79,6 +88,7 @@
 
 	const handleSelectedPlayer = (selectedPlayer: Player) => {
 		selectedPlayers = [...selectedPlayers, selectedPlayer];
+		toggleToaster();
 	};
 	const handleRemovePlayer = (player: Player) => {
 		selectedPlayers = selectedPlayers.filter(
@@ -92,8 +102,16 @@
 	<meta name="description" content="Add team" />
 </svelte:head>
 <div>
+	{#if displayToaster}
+		<Toast style="position: fixed; top: 10px; z-index: 100" color="green">
+			<svelte:fragment slot="icon">
+				<CheckCircleSolid class="w-5 h-5" />
+				<span class="sr-only">Check icon</span>
+			</svelte:fragment>
+			Player added successfully.
+		</Toast>
+	{/if}
 	<Heading>Add Team</Heading>
-
 	<form on:submit={handleSubmit}>
 		<div>
 			<Label for="name" class="mb-2" style="align-self: flex-start">Name</Label>
