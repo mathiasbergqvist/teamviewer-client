@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Alert } from 'flowbite-svelte';
-	export let statusMessage: 'success' | 'error' | 'hide' = 'hide';
+	export let statusMessage: 'success' | 'error' | 'hide' | 'incomplete' = 'hide';
 	export let successMessage: string;
 </script>
 
@@ -11,6 +11,8 @@
 		<Alert color="green">
 			{successMessage}
 		</Alert>
+	{:else if statusMessage === 'incomplete'}
+		<Alert>Please fill in the complete form</Alert>
 	{/if}
 </div>
 

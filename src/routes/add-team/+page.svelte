@@ -11,9 +11,21 @@
 	let name: string;
 	let stadium: string;
 	let manager: string;
-	let league: League;
+	let league: League | undefined;
 	let selectedPlayers: Array<Player> = [];
-	let statusMessage: 'success' | 'error' | 'hide';
+	let statusMessage: 'success' | 'error' | 'hide' | 'incomplete';
+
+	const clearForm = () => {
+		name = '';
+		stadium = '';
+		manager = '';
+		league = undefined;
+		selectedPlayers = [];
+
+		setTimeout(() => {
+			statusMessage = 'hide';
+		}, 2000);
+	};
 
 	const leagueItems = [
 		{
@@ -35,20 +47,25 @@
 	];
 
 	const handleSubmit = async () => {
-		const newTeam: Team = {
-			name,
-			stadium,
-			manager,
-			league,
-			players: selectedPlayers
-		};
+		if (league) {
+			const newTeam: Team = {
+				name,
+				stadium,
+				manager,
+				league,
+				players: selectedPlayers
+			};
 
-		const response = await postTeams(newTeam);
-		if ('error' in response) {
-			console.error('Error', response.error);
-			statusMessage = 'error';
+			const response = await postTeams(newTeam);
+			if ('error' in response) {
+				statusMessage = 'error';
+				clearForm();
+			} else {
+				statusMessage = 'success';
+				clearForm();
+			}
 		} else {
-			statusMessage = 'success';
+			statusMessage = 'incomplete';
 		}
 	};
 
