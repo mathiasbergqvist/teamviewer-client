@@ -3,6 +3,7 @@
 	import TeamTable from './TeamTable.svelte';
 	import type { Team } from '../utils/domain-models';
 	import { Heading, Select, Label, Spinner, Alert } from 'flowbite-svelte';
+	import { sortPlayersByType } from '../utils/sorting';
 
 	export let data: { teams: Array<Team> };
 	let selectedTeamId: string;
@@ -12,6 +13,7 @@
 		name: team.name
 	}));
 	$: selectedTeam = data.teams.find((team: Team) => team._id === selectedTeamId);
+	$: sortedPlayers = selectedTeam && sortPlayersByType(selectedTeam?.players);
 </script>
 
 <svelte:head>
@@ -42,7 +44,24 @@
 				<Reveal title="League" answer={selectedTeam.league} revealed />
 				<Reveal title="Stadium" answer={selectedTeam.stadium} />
 				<Reveal title="Manager" answer={selectedTeam.manager} />
-				<TeamTable players={selectedTeam.players} />
+				{#if sortedPlayers}
+					<TeamTable
+						heading={sortedPlayers.goalkeepers.heading}
+						players={sortedPlayers.goalkeepers.players}
+					/>
+					<TeamTable
+						heading={sortedPlayers.defenders.heading}
+						players={sortedPlayers.defenders.players}
+					/>
+					<TeamTable
+						heading={sortedPlayers.midfielders.heading}
+						players={sortedPlayers.midfielders.players}
+					/>
+					<TeamTable
+						heading={sortedPlayers.forwards.heading}
+						players={sortedPlayers.forwards.players}
+					/>
+				{/if}
 			</div>
 		{/if}
 	{:catch}

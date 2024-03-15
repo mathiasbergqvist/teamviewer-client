@@ -12,6 +12,7 @@
 	import { QuestionCircleSolid } from 'flowbite-svelte-icons';
 	import countryFlagEmoji from 'country-flag-emoji';
 
+	export let heading: string;
 	export let players: Array<Player>;
 
 	let revealed: Array<string> = [];
@@ -24,6 +25,9 @@
 </script>
 
 <Table striped={true}>
+	<caption class="p-5 text-lg font-semibold text-left text-gray-900" style="padding: 25px 0 0 0"
+		>{heading}</caption
+	>
 	<TableHead>
 		<TableHeadCell>Number</TableHeadCell>
 		<TableHeadCell>Country</TableHeadCell>

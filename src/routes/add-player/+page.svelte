@@ -3,19 +3,7 @@
 	import countryFlagEmoji from 'country-flag-emoji';
 	import { Position, type Player, League } from '../../utils/domain-models';
 	import { postPlayers } from '../../utils/api';
-
-	const compareNames = (a: { name: string }, b: { name: string }): number => {
-		const nameA = a.name.toUpperCase();
-		const nameB = b.name.toUpperCase();
-
-		if (nameA < nameB) {
-			return -1;
-		}
-		if (nameA > nameB) {
-			return 1;
-		}
-		return 0;
-	};
+	import { compareNames } from '../../utils/sorting';
 
 	const positionItems = [
 		{
