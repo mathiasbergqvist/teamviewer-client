@@ -10,6 +10,8 @@ export enum League {
 	PremierLeague = 'Premier League',
 	SerieA = 'Serie A',
 	LaLiga = 'La Liga',
+	Bundesliga = 'Bundesliga',
+	Ligue1 = 'Ligue 1',
 	NFL = 'NFL'
 }
 

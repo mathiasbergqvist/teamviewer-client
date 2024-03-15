@@ -41,6 +41,14 @@
 			name: League.LaLiga
 		},
 		{
+			value: League.Bundesliga,
+			name: League.Bundesliga
+		},
+		{
+			value: League.Ligue1,
+			name: League.Ligue1
+		},
+		{
 			value: League.NFL,
 			name: League.NFL
 		}
