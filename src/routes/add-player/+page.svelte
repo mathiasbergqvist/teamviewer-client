@@ -43,25 +43,42 @@
 
 	let name: string;
 	let number: number;
-	let position: Position;
-	let league: League;
+	let position: Position | undefined;
+	let league: League | undefined;
 	let countryUniCode: string;
-	let statusMessage: 'success' | 'error' | 'hide' = 'hide';
+	let statusMessage: 'success' | 'error' | 'hide' | 'incomplete' = 'hide';
+
+	const clearForm = () => {
+		name = '';
+		number = 0;
+		position = undefined;
+		league = undefined;
+		countryUniCode = '';
+
+		setTimeout(() => {
+			statusMessage = 'hide';
+		}, 2000);
+	};
 
 	const handleSubmit = async () => {
-		const newPlayer: Player = {
-			name,
-			number,
-			position,
-			league,
-			countryUnicode: countryUniCode
-		};
-		const response = await postPlayers(newPlayer);
-		if ('error' in response) {
-			console.error('Error', response.error);
-			statusMessage = 'error';
+		if (position && league) {
+			const newPlayer: Player = {
+				name,
+				number,
+				position,
+				league,
+				countryUnicode: countryUniCode
+			};
+			const response = await postPlayers(newPlayer);
+			if ('error' in response) {
+				statusMessage = 'error';
+				clearForm();
+			} else {
+				statusMessage = 'success';
+				clearForm();
+			}
 		} else {
-			statusMessage = 'success';
+			statusMessage = 'incomplete';
 		}
 	};
 </script>
@@ -120,13 +137,18 @@
 	<div class="alert">
 		{#if statusMessage === 'error'}
 			<Alert>
-				<span class="font-medium">Error</span>
+				<p class="font-medium">Error</p>
 				Something went wrong when adding player to database
 			</Alert>
 		{:else if statusMessage === 'success'}
 			<Alert color="green">
-				<span class="font-medium">Success</span>
+				<p class="font-medium">Success</p>
 				Player added to the database
+			</Alert>
+		{:else if statusMessage === 'incomplete'}
+			<Alert>
+				<p class="font-medium">Error</p>
+				Please fill in the complete form
 			</Alert>
 		{/if}
 	</div>
