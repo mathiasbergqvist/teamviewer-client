@@ -27,16 +27,6 @@
 			name: Position.Squad
 		}
 	];
-	const leaugeItems = [
-		{
-			value: League.PremierLeague,
-			name: League.PremierLeague
-		},
-		{
-			value: League.SerieA,
-			name: League.SerieA
-		}
-	];
 	const sortedEmojiItems = countryFlagEmoji.list.sort(compareNames);
 	const emojiItems = sortedEmojiItems.map((emojiData: any) => ({
 		name: `${emojiData.emoji} ${emojiData.name}`,
@@ -46,7 +36,6 @@
 	let name: string;
 	let number: number;
 	let position: Position | undefined;
-	let league: League | undefined;
 	let countryUniCode: string;
 	let statusMessage: 'success' | 'error' | 'hide' | 'incomplete' = 'hide';
 
@@ -54,7 +43,6 @@
 		name = '';
 		number = 0;
 		position = undefined;
-		league = undefined;
 		countryUniCode = '';
 
 		setTimeout(() => {
@@ -63,12 +51,11 @@
 	};
 
 	const handleSubmit = async () => {
-		if (position && league) {
+		if (position) {
 			const newPlayer: Player = {
 				name,
 				number,
 				position,
-				league,
 				countryUnicode: countryUniCode
 			};
 			const response = await postPlayers(newPlayer);
@@ -108,17 +95,6 @@
 				class="select"
 				items={positionItems}
 				bind:value={position}
-				size="lg"
-				style="maxWidth: 350px"
-			/>
-		</div>
-		<div>
-			<Label for="league" class="mb-2" style="align-self: flex-start">League</Label>
-			<Select
-				id="league"
-				class="select"
-				items={leaugeItems}
-				bind:value={league}
 				size="lg"
 				style="maxWidth: 350px"
 			/>

@@ -20,7 +20,6 @@ export type Player = {
 	name: string;
 	number: number;
 	position: Position;
-	league: League;
 	countryUnicode: string;
 };
 
