@@ -9,7 +9,9 @@
 		Modal,
 		Button
 	} from 'flowbite-svelte';
+	import countryFlagEmoji from 'country-flag-emoji';
 	import type { Player } from '../utils/domain-models';
+
 	export let handleSelectedPlayer: (player: Player) => void;
 	export let players: Array<Player> = [];
 	let modalOpen: boolean;
@@ -36,6 +38,7 @@
 				<TableHeadCell>Name</TableHeadCell>
 				<TableHeadCell>Number</TableHeadCell>
 				<TableHeadCell>Position</TableHeadCell>
+				<TableHeadCell>Country</TableHeadCell>
 				<TableHeadCell>
 					<span class="sr-only">Add</span>
 				</TableHeadCell>
@@ -46,6 +49,9 @@
 						<TableBodyCell>{player.name}</TableBodyCell>
 						<TableBodyCell>{player.number}</TableBodyCell>
 						<TableBodyCell>{player.position}</TableBodyCell>
+						{#if player.countryUnicode !== undefined}
+							<TableBodyCell>{countryFlagEmoji.get(player.countryUnicode)?.emoji}</TableBodyCell>
+						{/if}
 						<TableBodyCell>
 							<a
 								class="font-medium text-primary-600 hover:underline dark:text-primary-500"
@@ -64,5 +70,5 @@
 <style>
 	a:hover {
 		cursor: pointer;
-	}		
+	}
 </style>

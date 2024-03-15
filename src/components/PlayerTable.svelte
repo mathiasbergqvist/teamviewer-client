@@ -9,6 +9,7 @@
 		Table
 	} from 'flowbite-svelte';
 	import { getFilteredPlayers, sortPlayers } from '../utils/sorting';
+	import countryFlagEmoji from 'country-flag-emoji';
 
 	export let players: Array<Player>;
 	export let removedPlayerIds: Array<string> = [];
@@ -32,16 +33,20 @@
 			<TableHeadCell>Name</TableHeadCell>
 			<TableHeadCell>Number</TableHeadCell>
 			<TableHeadCell>Position</TableHeadCell>
+			<TableHeadCell>Country</TableHeadCell>
 			<TableHeadCell>
 				<span class="sr-only">Remove</span>
 			</TableHeadCell>
 		</TableHead>
 		<TableBody class="divide-y">
-			{#each filteredPlayers as player}
+			{#each filteredPlayers as { number, countryUnicode, position, name, _id }}
 				<TableBodyRow>
-					<TableBodyCell>{player.name}</TableBodyCell>
-					<TableBodyCell>{player.number}</TableBodyCell>
-					<TableBodyCell>{player.position}</TableBodyCell>
+					<TableBodyCell>{name}</TableBodyCell>
+					<TableBodyCell>{number}</TableBodyCell>
+					<TableBodyCell>{position}</TableBodyCell>
+					{#if countryUnicode !== undefined}
+						<TableBodyCell>{countryFlagEmoji.get(countryUnicode)?.emoji}</TableBodyCell>
+					{/if}
 					<TableBodyCell>
 						<a
 							on:click={() => handleRemovePlayer(player)}
