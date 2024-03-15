@@ -27,6 +27,7 @@
 	>
 	<Modal
 		title="Add Player"
+		style="min-height: 500px;"
 		bind:open={modalOpen}
 		on:close={() => {
 			modalOpen = false;
