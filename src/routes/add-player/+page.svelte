@@ -4,6 +4,19 @@
 	import { Position, type Player, League } from '../../utils/domain-models';
 	import { postPlayers } from '../../utils/api';
 
+	const compareNames = (a: { name: string }, b: { name: string }): number => {
+		const nameA = a.name.toUpperCase();
+		const nameB = b.name.toUpperCase();
+
+		if (nameA < nameB) {
+			return -1;
+		}
+		if (nameA > nameB) {
+			return 1;
+		}
+		return 0;
+	};
+
 	const positionItems = [
 		{
 			value: Position.Goalkeeper,
@@ -36,7 +49,8 @@
 			name: League.SerieA
 		}
 	];
-	const emojiItems = countryFlagEmoji.list.map((emojiData: any) => ({
+	const sortedEmojiItems = countryFlagEmoji.list.sort(compareNames);
+	const emojiItems = sortedEmojiItems.map((emojiData: any) => ({
 		name: `${emojiData.emoji} ${emojiData.name}`,
 		value: emojiData.code
 	}));
