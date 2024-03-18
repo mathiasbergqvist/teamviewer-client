@@ -51,7 +51,17 @@ const getSortedDefenders = (players: Array<Player>): Array<Defender> => {
 			player.position === Position.RightBack
 	) as Array<Defender>;
 	const positionOrder = { LeftBack: 1, CentreBack: 2, Defender: 3, RightBack: 4 };
-	return defenders.sort((a, b) => positionOrder[a.position] - positionOrder[b.position]);
+	return defenders.sort((a, b) => {
+		if (positionOrder[a.position] < positionOrder[b.position]) {
+			return -1;
+		}
+
+		if (positionOrder[a.position] > positionOrder[b.position]) {
+			return 1;
+		}
+
+		return a.number - b.number;
+	});
 };
 
 const getSortedMidfielders = (players: Array<Player>): Array<Midfielder> => {
@@ -62,7 +72,17 @@ const getSortedMidfielders = (players: Array<Player>): Array<Midfielder> => {
 			player.position === Position.AttackingMidfielder
 	) as Array<Midfielder>;
 	const positionOrder = { DefensiveMidfielder: 1, Midfielder: 2, AttackingMidfielder: 3 };
-	return midfielders.sort((a, b) => positionOrder[a.position] - positionOrder[b.position]);
+	return midfielders.sort((a, b) => {
+		if (positionOrder[a.position] < positionOrder[b.position]) {
+			return -1;
+		}
+
+		if (positionOrder[a.position] > positionOrder[b.position]) {
+			return 1;
+		}
+
+		return a.number - b.number;
+	});
 };
 
 const getSortedForwards = (players: Array<Player>): Array<Forward> => {
@@ -74,7 +94,17 @@ const getSortedForwards = (players: Array<Player>): Array<Forward> => {
 			player.position === Position.RightWinger
 	) as Array<Forward>;
 	const positionOrder = { LeftWinger: 1, Striker: 2, Forward: 3, RightWinger: 4 };
-	return forwards.sort((a, b) => positionOrder[a.position] - positionOrder[b.position]);
+	return forwards.sort((a, b) => {
+		if (positionOrder[a.position] < positionOrder[b.position]) {
+			return -1;
+		}
+
+		if (positionOrder[a.position] > positionOrder[b.position]) {
+			return 1;
+		}
+
+		return a.number - b.number;
+	});
 };
 
 export const sortPlayersByType = (players: Array<Player>): SortedFootballPlayers => {
@@ -88,19 +118,19 @@ export const sortPlayersByType = (players: Array<Player>): SortedFootballPlayers
 	return {
 		goalkeepers: {
 			heading: 'Goalkeepers',
-			players: goalkeepers && goalkeepers.sort(compareNumber)
+			players: goalkeepers
 		},
 		defenders: {
 			heading: 'Defenders',
-			players: defenders && defenders.sort(compareNumber)
+			players: defenders
 		},
 		midfielders: {
 			heading: 'Midfielders',
-			players: midfielders && midfielders.sort(compareNumber)
+			players: midfielders
 		},
 		forwards: {
 			heading: 'Forwards',
-			players: forwards && forwards.sort(compareNumber)
+			players: forwards
 		}
 	};
 };
