@@ -3,7 +3,15 @@ export enum Position {
 	Defender = 'Defender',
 	Midfielder = 'Midfielder',
 	Forward = 'Forward',
-	Squad = 'Squad'
+	Squad = 'Squad',
+	LeftBack = 'LeftBack',
+	RightBack = 'RightBack',
+	CentreBack = 'CentreBack',
+	DefensiveMidfielder = 'DefensiveMidfielder',
+	AttackingMidfielder = 'AttackingMidfielder',
+	LeftWinger = 'LeftWinger',
+	RightWinger = 'RightWinger',
+	Striker = 'Striker'
 }
 
 export enum League {
@@ -15,13 +23,26 @@ export enum League {
 	NFL = 'NFL'
 }
 
-export type Player = {
+export interface Player {
 	_id?: string;
 	name: string;
 	number: number;
 	position: Position;
 	countryUnicode: string;
-};
+}
+
+export interface Goalkeeper extends Player {
+	position: Position.Goalkeeper;
+}
+export interface Defender extends Player {
+	position: Position.Defender | Position.CentreBack | Position.LeftBack | Position.RightBack;
+}
+export interface Midfielder extends Player {
+	position: Position.Midfielder | Position.AttackingMidfielder | Position.DefensiveMidfielder;
+}
+export interface Forward extends Player {
+	position: Position.Forward | Position.LeftWinger | Position.RightWinger | Position.Striker;
+}
 
 export type Team = {
 	_id: string;
