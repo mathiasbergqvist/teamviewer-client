@@ -11,6 +11,7 @@
 	} from 'flowbite-svelte';
 	import { QuestionCircleSolid } from 'flowbite-svelte-icons';
 	import countryFlagEmoji from 'country-flag-emoji';
+	import { pascalCaseToWords } from '../utils/string.helpers';
 
 	export let heading: string;
 	export let players: Array<Player>;
@@ -41,7 +42,7 @@
 				{#if countryUnicode !== undefined}
 					<TableBodyCell>{countryFlagEmoji.get(countryUnicode)?.emoji}</TableBodyCell>
 				{/if}
-				<TableBodyCell>{position}</TableBodyCell>
+				<TableBodyCell>{pascalCaseToWords(position)}</TableBodyCell>
 				<TableBodyCell>
 					{#if isRevealed(_id)}
 						<p class="name">{name}</p>

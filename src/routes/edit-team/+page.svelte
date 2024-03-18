@@ -2,7 +2,7 @@
 	import PlayerTable from '../../components/PlayerTable.svelte';
 	import type { Player, Team } from '../../utils/domain-models';
 	import { Heading, Select, Label, Spinner, Alert, Input, Button } from 'flowbite-svelte';
-	import { getFilteredPlayers } from '../../utils/sorting';
+	import { getFilteredPlayers } from '../../utils/sorting.helpers';
 	import PlayerModal from '../../components/PlayerModal.svelte';
 	import { updateTeam } from '../../utils/api';
 	import StatusMessage from '../../components/StatusMessage.svelte';

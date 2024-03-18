@@ -1,5 +1,5 @@
 import { Position, type Player } from './domain-models';
-import { getFilteredPlayers, sortPlayers } from './sorting';
+import { getFilteredPlayers, sortPlayers } from './sorting.helpers';
 
 describe('sorting', () => {
 	describe('sortPlayers()', () => {

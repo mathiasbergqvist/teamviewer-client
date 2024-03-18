@@ -8,7 +8,7 @@
 		TableHeadCell,
 		Table
 	} from 'flowbite-svelte';
-	import { getFilteredPlayers, sortPlayers } from '../utils/sorting';
+	import { getFilteredPlayers, sortPlayers } from '../utils/sorting.helpers';
 	import countryFlagEmoji from 'country-flag-emoji';
 
 	export let players: Array<Player>;

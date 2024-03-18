@@ -3,7 +3,7 @@
 	import TeamTable from './TeamTable.svelte';
 	import type { Team } from '../utils/domain-models';
 	import { Heading, Select, Label, Spinner, Alert } from 'flowbite-svelte';
-	import { sortPlayersByType } from '../utils/sorting';
+	import { sortPlayersByType } from '../utils/sorting.helpers';
 
 	export let data: { teams: Array<Team> };
 	let selectedTeamId: string;

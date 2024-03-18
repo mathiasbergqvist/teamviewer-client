@@ -3,7 +3,7 @@
 	import countryFlagEmoji from 'country-flag-emoji';
 	import { Position, type Player, League } from '../../utils/domain-models';
 	import { postPlayers } from '../../utils/api';
-	import { compareNames } from '../../utils/sorting';
+	import { compareNames } from '../../utils/sorting.helpers';
 
 	const positionItems = [
 		{
