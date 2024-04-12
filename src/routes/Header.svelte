@@ -16,6 +16,9 @@
 			<li aria-current={$page.url.pathname.startsWith('/add-player') ? 'page' : undefined}>
 				<a href="/add-player">Add Player</a>
 			</li>
+			<li aria-current={$page.url.pathname.startsWith('/edit-player') ? 'page' : undefined}>
+				<a href="/edit-player">Edit Player</a>
+			</li>
 			<li aria-current={$page.url.pathname.startsWith('/add-team') ? 'page' : undefined}>
 				<a href="/add-team">Add Team</a>
 			</li>
