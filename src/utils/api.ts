@@ -98,3 +98,25 @@ export const postPlayers = async (player: Player): Promise<Player | ApiError> =>
 		};
 	}
 };
+
+export const updatePlayer = async (player: Player): Promise<Player | ApiError> => {
+	const jsonPlayer = {
+		name: player.name,
+		number: player.number,
+		position: player.position,
+		countryUnicode: player.countryUnicode
+	};
+	const body = JSON.stringify(jsonPlayer);
+	try {
+		const response = await fetch(`${API_URL}/players/${player._id}`, {
+			method: 'PUT',
+			headers: getHeaders(),
+			body
+		});
+		return (await response.json()) as Player;
+	} catch (error) {
+		return {
+			error
+		};
+	}
+};
