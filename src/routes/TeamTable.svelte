@@ -9,7 +9,7 @@
 		TableHeadCell,
 		Button
 	} from 'flowbite-svelte';
-	import { QuestionCircleSolid } from 'flowbite-svelte-icons';
+	import { QuestionCircleSolid, RedoOutline } from 'flowbite-svelte-icons';
 	import countryFlagEmoji from 'country-flag-emoji';
 	import { pascalCaseToWords } from '../utils/string.helpers';
 
@@ -22,6 +22,11 @@
 
 	const handleReveal = (id: string) => {
 		revealed = [...revealed, id];
+	};
+
+	const handleRetry = (retryId: string) => {
+		const filteredArray = revealed.filter((id) => id !== retryId);
+		revealed = filteredArray;
 	};
 </script>
 
@@ -38,19 +43,24 @@
 	<TableBody>
 		{#each players as { number, countryUnicode, position, name, _id }}
 			<TableBodyRow class="!h-12">
-				<TableBodyCell>{number}</TableBodyCell>
+				<TableBodyCell class="!p-4">{number}</TableBodyCell>
 				{#if countryUnicode !== undefined}
-					<TableBodyCell>{countryFlagEmoji.get(countryUnicode)?.emoji}</TableBodyCell>
+					<TableBodyCell class="!p-4">{countryFlagEmoji.get(countryUnicode)?.emoji}</TableBodyCell>
 				{/if}
-				<TableBodyCell>{pascalCaseToWords(position)}</TableBodyCell>
-				<TableBodyCell>
-					{#if isRevealed(_id)}
-						<p class="name">{name}</p>
-					{:else}
-						<Button on:click={() => handleReveal(_id)}>
-							<QuestionCircleSolid class="w-4 h-4 mr-2" /> Reveal
-						</Button>
-					{/if}
+				<TableBodyCell class="!p-4">{pascalCaseToWords(position)}</TableBodyCell>
+				<TableBodyCell style="width: 400px">
+					<div class="reveal-container">
+						{#if isRevealed(_id)}
+							<p class="name">{name}</p>
+							<Button on:click={() => handleRetry(_id)}>
+								<RedoOutline class="w-4 h-4 mr-2" /> Retry
+							</Button>
+						{:else}
+							<Button on:click={() => handleReveal(_id)}>
+								<QuestionCircleSolid class="w-4 h-4 mr-2" /> Reveal
+							</Button>
+						{/if}
+					</div>
 				</TableBodyCell>
 			</TableBodyRow>
 		{/each}
@@ -58,6 +68,14 @@
 </Table>
 
 <style>
+	.cell {
+		width: 500px;
+	}
+	.reveal-container {
+		display: flex;
+		gap: 10px;
+		/* width: 250px; */
+	}
 	.name {
 		font-weight: bold;
 		line-height: 40px;
