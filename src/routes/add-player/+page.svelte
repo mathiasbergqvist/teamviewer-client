@@ -1,73 +1,9 @@
 <script lang="ts">
 	import { Heading, Input, Label, NumberInput, Button, Select, Alert } from 'flowbite-svelte';
-	import countryFlagEmoji from 'country-flag-emoji';
-	import { Position, type Player, League } from '../../utils/domain-models';
+	import { Position, type Player } from '../../utils/domain-models';
 	import { postPlayers } from '../../utils/api';
-	import { compareNames } from '../../utils/sorting.helpers';
-
-	const positionItems = [
-		{
-			value: Position.Goalkeeper,
-			name: Position.Goalkeeper
-		},
-		{
-			value: Position.Defender,
-			name: Position.Defender
-		},
-		{
-			value: Position.LeftBack,
-			name: 'Left Back'
-		},
-		{
-			value: Position.CentreBack,
-			name: 'Centre Back'
-		},
-		{
-			value: Position.RightBack,
-			name: 'Right Back'
-		},
-		{
-			value: Position.Midfielder,
-			name: Position.Midfielder
-		},
-		{
-			value: Position.DefensiveMidfielder,
-			name: 'Defensive Midfielder'
-		},
-		{
-			value: Position.AttackingMidfielder,
-			name: 'Attacking Midfielder'
-		},
-		{
-			value: Position.Forward,
-			name: Position.Forward
-		},
-		{
-			value: Position.LeftWinger,
-			name: 'Left Winger'
-		},
-		{
-			value: Position.Striker,
-			name: Position.Striker
-		},
-		{
-			value: Position.RightWinger,
-			name: 'Right Winger'
-		},
-		{
-			value: Position.Forward,
-			name: Position.Forward
-		},
-		{
-			value: Position.Squad,
-			name: Position.Squad
-		}
-	];
-	const sortedEmojiItems = countryFlagEmoji.list.sort(compareNames);
-	const emojiItems = sortedEmojiItems.map((emojiData: any) => ({
-		name: `${emojiData.emoji} ${emojiData.name}`,
-		value: emojiData.code
-	}));
+	import positionItems from '../../data/positionItems';
+	import emojiItems from '../../data/emojiItems';
 
 	let name: string;
 	let number: number;
