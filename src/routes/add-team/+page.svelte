@@ -139,7 +139,7 @@
 		<PlayerTable players={selectedPlayers} {handleRemovePlayer} />
 		<Button type="submit" style="margin: 15px 0">Save Team</Button>
 	</form>
-	<PlayerModal {handleSelectedPlayer} players={data.players} />
+	<PlayerModal {handleSelectedPlayer} players={data.players} header="Add player" buttonText="Add" />
 	<StatusMessage {statusMessage} successMessage="Team added to the database" />
 </div>
 

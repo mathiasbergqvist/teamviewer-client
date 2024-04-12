@@ -14,6 +14,9 @@
 
 	export let handleSelectedPlayer: (player: Player) => void;
 	export let players: Array<Player> = [];
+	export let header: string;
+	export let buttonText: string;
+
 	let modalOpen: boolean;
 	let searchTerm = '';
 	$: filteredItems = players.filter(
@@ -23,11 +26,12 @@
 
 {#if players.length > 0}
 	<Button on:click={() => (modalOpen = true)} color="yellow" style="margin: 15px 0; width: 700px;"
-		>Add player</Button
+		>{header}</Button
 	>
 	<Modal
-		title="Add Player"
-		style="min-height: 500px;"
+		title={header}
+		size="xl"
+		style="min-height: 1500px;"
 		bind:open={modalOpen}
 		on:close={() => {
 			modalOpen = false;
@@ -41,7 +45,7 @@
 				<TableHeadCell>Position</TableHeadCell>
 				<TableHeadCell>Country</TableHeadCell>
 				<TableHeadCell>
-					<span class="sr-only">Add</span>
+					<span class="sr-only">{buttonText}</span>
 				</TableHeadCell>
 			</TableHead>
 			<TableBody class="divide-y">
@@ -58,7 +62,7 @@
 								class="font-medium text-primary-600 hover:underline dark:text-primary-500"
 								on:click={() => handleSelectedPlayer(player)}
 							>
-								Add
+								{buttonText}
 							</a>
 						</TableBodyCell>
 					</TableBodyRow>

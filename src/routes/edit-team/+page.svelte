@@ -121,7 +121,12 @@
 					{removedPlayerIds}
 					{addedPlayers}
 				/>
-				<PlayerModal {handleSelectedPlayer} players={data.players} />
+				<PlayerModal
+					{handleSelectedPlayer}
+					players={data.players}
+					header="Add player"
+					buttonText="Add"
+				/>
 				<Button type="submit" style="margin: 15px 0">Save Team</Button>
 			</form>
 		{/if}
