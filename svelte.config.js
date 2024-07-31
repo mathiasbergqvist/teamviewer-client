@@ -1,7 +1,7 @@
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
-const API_URL = process.env.VITE_API_DOMAIN;
+const API_URL = process.env.VITE_API_DOMAIN || 'http://localhost:*';
 const cspDirectives = {
 	'base-uri': ["'self'"],
 	'child-src': ["'self'"],

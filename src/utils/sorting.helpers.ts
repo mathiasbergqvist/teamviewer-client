@@ -42,7 +42,7 @@ export const compareNames = (a: { name: string }, b: { name: string }): number =
 export const compareNumber = (a: { number: number }, b: { number: number }): number =>
 	a.number - b.number;
 
-const getSortedDefenders = (players: Array<Player>): Array<Defender> => {
+export const getSortedDefenders = (players: Array<Player>): Array<Defender> => {
 	const defenders: Array<Defender> = players.filter(
 		(player) =>
 			player.position === Position.Defender ||
@@ -64,7 +64,7 @@ const getSortedDefenders = (players: Array<Player>): Array<Defender> => {
 	});
 };
 
-const getSortedMidfielders = (players: Array<Player>): Array<Midfielder> => {
+export const getSortedMidfielders = (players: Array<Player>): Array<Midfielder> => {
 	const midfielders = players.filter(
 		(player) =>
 			player.position === Position.Midfielder ||
@@ -85,7 +85,7 @@ const getSortedMidfielders = (players: Array<Player>): Array<Midfielder> => {
 	});
 };
 
-const getSortedForwards = (players: Array<Player>): Array<Forward> => {
+export const getSortedForwards = (players: Array<Player>): Array<Forward> => {
 	const forwards = players.filter(
 		(player) =>
 			player.position === Position.LeftWinger ||
@@ -94,6 +94,7 @@ const getSortedForwards = (players: Array<Player>): Array<Forward> => {
 			player.position === Position.RightWinger
 	) as Array<Forward>;
 	const positionOrder = { LeftWinger: 1, Striker: 2, Forward: 3, RightWinger: 4 };
+
 	return forwards.sort((a, b) => {
 		if (positionOrder[a.position] < positionOrder[b.position]) {
 			return -1;
