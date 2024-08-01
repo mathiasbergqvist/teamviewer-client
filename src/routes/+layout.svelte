@@ -29,7 +29,7 @@
 		max-width: 64rem;
 		margin: 0 auto;
 		box-sizing: border-box;
-		margin-top: 100px;
+		margin-top: 50px;
 	}
 
 	footer {
