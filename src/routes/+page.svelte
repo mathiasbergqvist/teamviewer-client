@@ -46,6 +46,7 @@
 			</Label>
 		</div>
 		{#if selectedTeam !== undefined}
+			<hr />
 			<div>
 				<Heading tag="h2" align="center">{selectedTeam.name}</Heading>
 				<Reveal title="League" answer={selectedTeam.league} revealed />
@@ -88,10 +89,14 @@
 </div>
 
 <style>
+	hr {
+		border-top: thick double var(--color-theme-1);
+		margin-bottom: 25px;
+	}
 	.select-container {
 		display: flex;
 		justify-content: center;
-		margin: 25px;
+		margin: 50px 25px 25px 25px;
 	}
 
 	.button-container {
