@@ -10,10 +10,12 @@
 	export let data: { teams: Array<Team>; players: Array<Player> };
 	let selectedTeamId: string = '';
 
-	$: teamOptions = data.teams.map((team: Team) => ({
-		value: team._id,
-		name: team.name
-	}));
+	$: teamOptions = data.teams
+		.map((team: Team) => ({
+			value: team._id,
+			name: team.name
+		}))
+		.sort((a, b) => a.name.localeCompare(b.name));
 	$: selectedTeam = data.teams.find((team: Team) => team._id === selectedTeamId);
 
 	let removedPlayerIds: Array<string> = [];

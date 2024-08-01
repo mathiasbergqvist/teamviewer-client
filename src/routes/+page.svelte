@@ -9,10 +9,12 @@
 	let selectedTeamId: string;
 	let allIsRevealed: boolean = false;
 
-	$: teamOptions = data.teams.map((team: Team) => ({
-		value: team._id,
-		name: team.name
-	}));
+	$: teamOptions = data.teams
+		.map((team: Team) => ({
+			value: team._id,
+			name: team.name
+		}))
+		.sort((a, b) => a.name.localeCompare(b.name));
 	$: selectedTeam = data.teams.find((team: Team) => team._id === selectedTeamId);
 	$: sortedPlayers = selectedTeam && sortPlayersByType(selectedTeam?.players);
 
