@@ -7,16 +7,28 @@
 
 	export let data: { teams: Array<Team> };
 	let selectedTeamId: string;
+	let selectedLeague: string;
 	let allIsRevealed: boolean = false;
+	let leagues: Array<{ name: string; value: string }> = [{ value: 'all', name: 'All' }];
 
-	$: teamOptions = data.teams
+	$: filteredTeams =
+		selectedLeague && selectedLeague !== 'all'
+			? data.teams.filter((team: Team) => team.league === selectedLeague)
+			: data.teams;
+	$: teamOptions = filteredTeams
+		.sort((a, b) => a.name.localeCompare(b.name))
 		.map((team: Team) => ({
 			value: team._id,
 			name: team.name
-		}))
-		.sort((a, b) => a.name.localeCompare(b.name));
+		}));
 	$: selectedTeam = data.teams.find((team: Team) => team._id === selectedTeamId);
 	$: sortedPlayers = selectedTeam && sortPlayersByType(selectedTeam?.players);
+
+	data.teams.forEach((team: Team) => {
+		if (!leagues.find((league) => league.value === team.league)) {
+			leagues.push({ value: team.league, name: team.league });
+		}
+	});
 
 	const setAllVisibility = (reveal: boolean) => {
 		allIsRevealed = reveal;
@@ -34,16 +46,22 @@
 	{:then}
 		<Heading>Team Viewer</Heading>
 		<div class="select-container">
-			<Label>
-				Choose a team
-				<Select
-					class="select"
-					items={teamOptions}
-					bind:value={selectedTeamId}
-					size="lg"
-					style="width: 350px"
-				/>
-			</Label>
+			<Select
+				class="select"
+				items={leagues}
+				bind:value={selectedLeague}
+				size="lg"
+				style="width: 200px"
+				placeholder="League"
+			/>
+			<Select
+				class="select"
+				items={teamOptions}
+				bind:value={selectedTeamId}
+				size="lg"
+				style="width: 300px"
+				placeholder="Team"
+			/>
 		</div>
 		{#if selectedTeam !== undefined}
 			<hr />
@@ -95,6 +113,8 @@
 	}
 	.select-container {
 		display: flex;
+		gap: 10px;
+		flex-direction: row;
 		justify-content: center;
 		margin: 50px 25px 25px 25px;
 	}
