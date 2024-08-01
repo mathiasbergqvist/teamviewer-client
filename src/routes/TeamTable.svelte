@@ -15,9 +15,9 @@
 
 	export let heading: string;
 	export let players: Array<Player>;
+	export let allIsRevealed: boolean = false;
 
-	let revealed: Array<string> = [];
-
+	$: revealed = allIsRevealed ? players.map((player) => player._id) : [];
 	$: isRevealed = (id: string) => revealed.includes(id);
 
 	const handleReveal = (id: string) => {
