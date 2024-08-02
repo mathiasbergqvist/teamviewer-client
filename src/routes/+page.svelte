@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Reveal from './Reveal.svelte';
 	import TeamTable from './TeamTable.svelte';
-	import type { Team } from '../utils/domain-models';
+	import { League, type Team } from '../utils/domain-models';
 	import { Heading, Select, Label, Spinner, Alert, Button } from 'flowbite-svelte';
-	import { sortPlayersByType } from '../utils/sorting.helpers';
+	import { sortFootballPlayersByType, sortSoccerPlayersByType } from '../utils/sorting.helpers';
 
 	export let data: { teams: Array<Team> };
 	let selectedTeamId: string;
@@ -22,7 +22,11 @@
 			name: team.name
 		}));
 	$: selectedTeam = data.teams.find((team: Team) => team._id === selectedTeamId);
-	$: sortedPlayers = selectedTeam && sortPlayersByType(selectedTeam?.players);
+	$: sortedPlayers =
+		selectedTeam &&
+		(selectedTeam.league === League.NFL
+			? sortFootballPlayersByType(selectedTeam?.players)
+			: sortSoccerPlayersByType(selectedTeam?.players));
 
 	data.teams.forEach((team: Team) => {
 		if (!leagues.find((league) => league.value === team.league)) {
@@ -71,26 +75,7 @@
 				<Reveal title="Stadium" answer={selectedTeam.stadium} />
 				<Reveal title="Manager" answer={selectedTeam.manager} />
 				{#if sortedPlayers}
-					<TeamTable
-						heading={sortedPlayers.goalkeepers.heading}
-						players={sortedPlayers.goalkeepers.players}
-						{allIsRevealed}
-					/>
-					<TeamTable
-						heading={sortedPlayers.defenders.heading}
-						players={sortedPlayers.defenders.players}
-						{allIsRevealed}
-					/>
-					<TeamTable
-						heading={sortedPlayers.midfielders.heading}
-						players={sortedPlayers.midfielders.players}
-						{allIsRevealed}
-					/>
-					<TeamTable
-						heading={sortedPlayers.forwards.heading}
-						players={sortedPlayers.forwards.players}
-						{allIsRevealed}
-					/>
+					<TeamTable players={sortedPlayers} {allIsRevealed} />
 				{/if}
 				<div class="button-container">
 					<Button on:click={() => setAllVisibility(true)}>Show all</Button>
