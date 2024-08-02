@@ -11,7 +11,11 @@ export enum Position {
 	AttackingMidfielder = 'AttackingMidfielder',
 	LeftWinger = 'LeftWinger',
 	RightWinger = 'RightWinger',
-	Striker = 'Striker'
+	Striker = 'Striker',
+	Quarterback = 'Quarterback',
+	RunningBack = 'RunningBack',
+	WideReceiver = 'WideReceiver',
+	TightEnd = 'TightEnd'
 }
 
 export enum League {
@@ -42,6 +46,18 @@ export interface Midfielder extends Player {
 }
 export interface Forward extends Player {
 	position: Position.Forward | Position.LeftWinger | Position.RightWinger | Position.Striker;
+}
+export interface Quarterback extends Player {
+	position: Position.Quarterback;
+}
+export interface RunningBack extends Player {
+	position: Position.RunningBack;
+}
+export interface WideReceiver extends Player {
+	position: Position.WideReceiver;
+}
+export interface TightEnd extends Player {
+	position: Position.TightEnd;
 }
 
 export type Team = {

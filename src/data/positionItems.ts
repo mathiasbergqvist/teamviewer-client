@@ -61,6 +61,22 @@ const positionItems: Array<PositionItem> = [
 	{
 		value: Position.Squad,
 		name: Position.Squad
+	},
+	{
+		value: Position.Quarterback,
+		name: Position.Quarterback
+	},
+	{
+		value: Position.RunningBack,
+		name: 'Running Back'
+	},
+	{
+		value: Position.WideReceiver,
+		name: 'Wide Receiver'
+	},
+	{
+		value: Position.TightEnd,
+		name: 'Tight End'
 	}
 ];
 

@@ -4,10 +4,14 @@ import {
 	type Defender,
 	type Goalkeeper,
 	type Midfielder,
-	type Forward
+	type Forward,
+	type Quarterback,
+	type RunningBack,
+	type WideReceiver,
+	type TightEnd
 } from './domain-models';
 
-export type SortedFootballPlayers = {
+export type SortedSoccerPlayers = {
 	goalkeepers: {
 		heading: string;
 		players: Array<Goalkeeper>;
@@ -23,6 +27,25 @@ export type SortedFootballPlayers = {
 	forwards: {
 		heading: string;
 		players: Array<Forward>;
+	};
+};
+
+export type SortedFootballPlayers = {
+	quarterbacks: {
+		heading: string;
+		players: Array<Quarterback>;
+	};
+	runningBacks: {
+		heading: string;
+		players: Array<RunningBack>;
+	};
+	wideReceivers: {
+		heading: string;
+		players: Array<WideReceiver>;
+	};
+	tightEnds: {
+		heading: string;
+		players: Array<TightEnd>;
 	};
 };
 
@@ -108,10 +131,43 @@ export const getSortedForwards = (players: Array<Player>): Array<Forward> => {
 	});
 };
 
-export const sortPlayersByType = (players: Array<Player>): SortedFootballPlayers => {
-	const goalkeepers = players.filter(
-		(player) => player.position === Position.Goalkeeper
-	) as Array<Goalkeeper>;
+export const filterPlayersByType = <T>(players: Array<Player>, position: Position): Array<T> =>
+	players.filter((player) => player.position === position) as Array<T>;
+
+export const sortFootballPlayersByType = (players: Array<Player>): SortedFootballPlayers => {
+	const quarterbacks = filterPlayersByType<Quarterback>(players, Position.Quarterback).sort(
+		compareNumber
+	);
+	const runningBacks = filterPlayersByType<RunningBack>(players, Position.RunningBack).sort(
+		compareNumber
+	);
+	const wideReceivers = filterPlayersByType<WideReceiver>(players, Position.WideReceiver).sort(
+		compareNumber
+	);
+	const tightEnds = filterPlayersByType<TightEnd>(players, Position.TightEnd).sort(compareNumber);
+
+	return {
+		quarterbacks: {
+			heading: 'Quarterbacks',
+			players: quarterbacks
+		},
+		runningBacks: {
+			heading: 'Running Backs',
+			players: runningBacks
+		},
+		wideReceivers: {
+			heading: 'Wide Receivers',
+			players: wideReceivers
+		},
+		tightEnds: {
+			heading: 'Tight Ends',
+			players: tightEnds
+		}
+	};
+};
+
+export const sortSoccerPlayersByType = (players: Array<Player>): SortedSoccerPlayers => {
+	const goalkeepers = filterPlayersByType<Goalkeeper>(players, Position.Goalkeeper);
 	const defenders = getSortedDefenders(players);
 	const midfielders = getSortedMidfielders(players);
 	const forwards = getSortedForwards(players);
@@ -136,7 +192,7 @@ export const sortPlayersByType = (players: Array<Player>): SortedFootballPlayers
 	};
 };
 
-export const sortPlayers = (players: Array<Player>): Array<Player> => {
+export const sortSoccerPlayers = (players: Array<Player>): Array<Player> => {
 	const positionOrder = {
 		Goalkeeper: 1,
 		Defender: 2,
@@ -150,8 +206,13 @@ export const sortPlayers = (players: Array<Player>): Array<Player> => {
 		LeftWinger: 10,
 		Striker: 11,
 		RightWinger: 12,
-		Squad: 13
+		Squad: 13,
+		Quarterback: 100,
+		RunningBack: 101,
+		WideReceiver: 102,
+		TightEnd: 103
 	};
+
 	return players.sort((a, b) => positionOrder[a.position] - positionOrder[b.position]);
 };
 

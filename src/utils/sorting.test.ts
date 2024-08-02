@@ -1,13 +1,15 @@
-import { Position, type Player } from './domain-models';
+import { Position, type Goalkeeper, type Player } from './domain-models';
 import {
 	compareNames,
 	compareNumber,
+	filterPlayersByType,
 	getFilteredPlayers,
 	getSortedDefenders,
 	getSortedForwards,
 	getSortedMidfielders,
-	sortPlayers,
-	sortPlayersByType
+	sortFootballPlayersByType,
+	sortSoccerPlayers,
+	sortSoccerPlayersByType
 } from './sorting.helpers';
 
 describe('sorting.helpers', () => {
@@ -154,7 +156,97 @@ describe('sorting.helpers', () => {
 		});
 	});
 
-	describe('sortPlayersByType()', () => {
+	describe('filterPlayersByType()', () => {
+		it('should filter players by type', () => {
+			const mockPlayers: Array<Player> = [
+				{
+					position: Position.Goalkeeper,
+					number: 1
+				},
+				{
+					position: Position.Defender,
+					number: 2
+				},
+				{
+					position: Position.Midfielder,
+					number: 3
+				},
+				{
+					position: Position.Forward,
+					number: 4
+				},
+				{
+					position: Position.Goalkeeper,
+					number: 5
+				}
+			] as Array<Player>;
+			const expected = [
+				{ position: 'Goalkeeper', number: 1 },
+				{ position: 'Goalkeeper', number: 5 }
+			];
+			const actual = filterPlayersByType<Goalkeeper>(mockPlayers, Position.Goalkeeper);
+			expect(actual).toEqual(expected);
+		});
+	});
+
+	describe('sortFootballPlayersByType()', () => {
+		it('should sort players by type', () => {
+			const mockPlayers: Array<Player> = [
+				{
+					position: Position.Quarterback,
+					number: 1
+				},
+				{
+					position: Position.RunningBack,
+					number: 2
+				},
+				{
+					position: Position.WideReceiver,
+					number: 88
+				},
+				{
+					position: Position.WideReceiver,
+					number: 3
+				},
+				{
+					position: Position.TightEnd,
+					number: 4
+				},
+				{
+					position: Position.Quarterback,
+					number: 5
+				}
+			] as Array<Player>;
+			const expected = {
+				quarterbacks: {
+					heading: 'Quarterbacks',
+					players: [
+						{ position: 'Quarterback', number: 1 },
+						{ position: 'Quarterback', number: 5 }
+					]
+				},
+				runningBacks: {
+					heading: 'Running Backs',
+					players: [{ position: 'RunningBack', number: 2 }]
+				},
+				wideReceivers: {
+					heading: 'Wide Receivers',
+					players: [
+						{ position: 'WideReceiver', number: 3 },
+						{ position: 'WideReceiver', number: 88 }
+					]
+				},
+				tightEnds: {
+					heading: 'Tight Ends',
+					players: [{ position: 'TightEnd', number: 4 }]
+				}
+			};
+			const actual = sortFootballPlayersByType(mockPlayers);
+			expect(actual).toEqual(expected);
+		});
+	});
+
+	describe('sortSoccerPlayersByType()', () => {
 		it('should sort players by type', () => {
 			const mockPlayers: Array<Player> = [
 				{
@@ -199,12 +291,12 @@ describe('sorting.helpers', () => {
 					players: [{ position: 'Forward', number: 4 }]
 				}
 			};
-			const actual = sortPlayersByType(mockPlayers);
+			const actual = sortSoccerPlayersByType(mockPlayers);
 			expect(actual).toEqual(expected);
 		});
 	});
 
-	describe('sortPlayers()', () => {
+	describe('sortSoccerPlayers()', () => {
 		it('should sort players based on position', () => {
 			const mockPlayers: Array<Player> = [
 				{
@@ -215,7 +307,7 @@ describe('sorting.helpers', () => {
 				}
 			] as Array<Player>;
 			const expected = [{ position: 'Goalkeeper' }, { position: 'Forward' }];
-			const actual = sortPlayers(mockPlayers);
+			const actual = sortSoccerPlayers(mockPlayers);
 			expect(actual).toEqual(expected);
 		});
 	});
