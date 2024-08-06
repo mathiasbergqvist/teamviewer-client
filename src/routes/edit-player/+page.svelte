@@ -130,7 +130,7 @@
 				{handleSelectedPlayer}
 				header="Select Player"
 				buttonText="Edit"
-			></PlayerModal>
+			/>
 		{/if}
 		<StatusMessage {statusMessage} successMessage="Successfully updated player." />
 	{:catch}

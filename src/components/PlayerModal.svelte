@@ -11,6 +11,8 @@
 	} from 'flowbite-svelte';
 	import countryFlagEmoji from 'country-flag-emoji';
 	import type { Player } from '../utils/domain-models';
+	import { onDestroy } from 'svelte';
+	import debounce from 'debounce';
 
 	export let handleSelectedPlayer: (player: Player) => void;
 	export let players: Array<Player> = [];
@@ -19,9 +21,31 @@
 
 	let modalOpen: boolean;
 	let searchTerm = '';
-	$: filteredItems = players.filter(
-		(player) => player.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
-	);
+	let filteredItems = players;
+
+	// A function to filter players based on the search term
+	function updateFilteredItems() {
+		filteredItems = players.filter((player) =>
+			player.name.toLowerCase().includes(searchTerm.toLowerCase())
+		);
+	}
+
+	// Create a debounced version of the updateFilteredItems function
+	const debouncedUpdateFilteredItems = debounce(updateFilteredItems, 300);
+
+	// Watch searchTerm and players and call the debounced function
+	$: {
+		if (searchTerm) {
+			debouncedUpdateFilteredItems();
+		} else {
+			filteredItems = players;
+		}
+	}
+
+	// Cleanup debounced function on component destroy
+	onDestroy(() => {
+		debouncedUpdateFilteredItems.clear();
+	});
 </script>
 
 {#if players.length > 0}
