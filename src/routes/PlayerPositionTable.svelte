@@ -45,7 +45,9 @@
 			<TableBodyRow class="!h-12">
 				<TableBodyCell class="!p-4">{number}</TableBodyCell>
 				{#if countryUnicode !== undefined}
-					<TableBodyCell class="!p-4">{countryFlagEmoji.get(countryUnicode)?.emoji}</TableBodyCell>
+					<TableBodyCell class="!p-4"
+						><span>{countryFlagEmoji.get(countryUnicode)?.emoji}</span></TableBodyCell
+					>
 				{/if}
 				<TableBodyCell class="!p-4">{pascalCaseToWords(position)}</TableBodyCell>
 				<TableBodyCell style="width: 400px">
@@ -68,6 +70,9 @@
 </Table>
 
 <style>
+	span {
+		font-size: 30px;
+	}
 	.cell {
 		width: 500px;
 	}

@@ -39,13 +39,16 @@
 			</TableHeadCell>
 		</TableHead>
 		<TableBody class="divide-y">
-			{#each filteredPlayers as { number, countryUnicode, position, name, _id }}
+			{#each filteredPlayers as player}
 				<TableBodyRow>
-					<TableBodyCell>{name}</TableBodyCell>
-					<TableBodyCell>{number}</TableBodyCell>
-					<TableBodyCell>{position}</TableBodyCell>
-					{#if countryUnicode !== undefined}
-						<TableBodyCell>{countryFlagEmoji.get(countryUnicode)?.emoji}</TableBodyCell>
+					<TableBodyCell>{player.name}</TableBodyCell>
+					<TableBodyCell>{player.number}</TableBodyCell>
+					<TableBodyCell>{player.position}</TableBodyCell>
+					{#if player.countryUnicode !== undefined}
+						<TableBodyCell
+							><span class="flag">{countryFlagEmoji.get(player.countryUnicode)?.emoji}</span
+							></TableBodyCell
+						>
 					{/if}
 					<TableBodyCell>
 						<a
@@ -62,5 +65,9 @@
 <style>
 	a:hover {
 		cursor: pointer;
+	}
+
+	.flag {
+		font-size: 30px;
 	}
 </style>

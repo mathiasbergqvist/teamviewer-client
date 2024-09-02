@@ -79,7 +79,10 @@
 						<TableBodyCell>{player.number}</TableBodyCell>
 						<TableBodyCell>{player.position}</TableBodyCell>
 						{#if player.countryUnicode !== undefined}
-							<TableBodyCell>{countryFlagEmoji.get(player.countryUnicode)?.emoji}</TableBodyCell>
+							<TableBodyCell
+								><span class="flag">{countryFlagEmoji.get(player.countryUnicode)?.emoji}</span
+								></TableBodyCell
+							>
 						{/if}
 						<TableBodyCell>
 							<a
@@ -97,6 +100,9 @@
 {/if}
 
 <style>
+	.flag {
+		font-size: 30px;
+	}
 	a:hover {
 		cursor: pointer;
 	}
